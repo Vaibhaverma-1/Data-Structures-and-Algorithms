@@ -6,16 +6,14 @@ class Solution {
         
         for (int i = 0; i < numRows; i++) {
             List<Integer> row = new ArrayList<>();
-            
-            for (int j = 0; j <= i; j++) {
-                if (j == 0 || j == i) {
-                    row.add(1);
-                } else {
-                    row.add(list.get(i - 1).get(j - 1) + list.get(i - 1).get(j));
-                }
+            int ans = 1;
+            row.add(ans); 
+            for (int j = 1; j <= i; j++) {
+                ans = ans * (i - j + 1) / j;
+                row.add(ans); 
             }
-            
-            list.add(row);
+
+            list.add(row); 
         }
         
         return list;
