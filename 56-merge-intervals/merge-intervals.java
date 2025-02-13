@@ -1,54 +1,23 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 class Solution {
     public int[][] merge(int[][] intervals) {
-        if (intervals.length <= 1) {
-            return intervals;
-        }
-
-        // Sort the intervals based on the start value
+        // Step 1: Sort the intervals based on the start value
         Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
 
         List<int[]> merged = new ArrayList<>();
-        int[] currentInterval = intervals[0];
-        merged.add(currentInterval);
 
-        for (int i = 1; i < intervals.length; i++) {
-            int[] nextInterval = intervals[i];
-            if (currentInterval[1] >= nextInterval[0]) { // Overlapping intervals
-                currentInterval = merge(currentInterval, nextInterval); // Use your merge function
-                merged.set(merged.size() - 1, currentInterval); // Update the last interval in the list
-            } else { // Non-overlapping interval
-                currentInterval = nextInterval;
-                merged.add(currentInterval);
+        for (int[] interval : intervals) {
+            // If merged list is empty or current interval does not overlap with the last one
+            if (merged.isEmpty() || merged.get(merged.size() - 1)[1] < interval[0]) {
+                merged.add(interval);
+            } else {
+                // Merge intervals by updating the end of the last interval
+                merged.get(merged.size() - 1)[1] = Math.max(merged.get(merged.size() - 1)[1], interval[1]);
             }
         }
 
-        // Convert the list to a 2D array
+        // Convert List to 2D array
         return merged.toArray(new int[merged.size()][]);
-    }
-
-    // Your merge function
-    private int[] merge(int[] a, int[] b) {
-        if (a[0] == b[0]) {
-            if (a[1] >= b[1]) {
-                return a;
-            } else {
-                return b;
-            }
-        } else {
-            if (a[1] >= b[0]) {
-                if (a[1] >= b[1]) {
-                    return a;
-                } else {
-                    a[1] = b[1];
-                    return a;
-                }
-            } else {
-                return b; // If intervals don't overlap, return the second interval
-            }
-        }
     }
 }
