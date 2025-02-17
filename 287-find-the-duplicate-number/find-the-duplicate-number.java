@@ -1,3 +1,4 @@
+// Tortoise and Hare Method
 class Solution {
     public int findDuplicate(int[] nums) {
         int slow = nums[0];
