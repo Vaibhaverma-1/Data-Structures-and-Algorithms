@@ -1,27 +1,18 @@
 class Solution {
     public int findDuplicate(int[] nums) {
-        int e= findMax(nums);
-        int hashset[] = new int[e+1];
-        for(int i=0; i<nums.length; i++){
-            hashset[nums[i]]++;
+        int slow = nums[0];
+        int fast = nums[0];
+        slow=nums[slow];
+        fast=nums[nums[fast]];
+        while(slow!=fast){
+            slow=nums[slow];
+            fast=nums[nums[fast]];
         }
-
-        for(int i=0; i<nums.length; i++){
-            if(hashset[nums[i]]>=2){
-                return nums[i];
-            }
+        slow=nums[0];
+        while(slow!=fast){
+            slow=nums[slow];
+            fast=nums[fast];
         }
-         return -1;
+        return slow;
     }
-    int findMax(int[] nums){
-        int max=Integer.MIN_VALUE;
-        for(int i=0; i<nums.length; i++){
-            if(nums[i]>=max){
-                max=nums[i];
-            }
-        }
-        return max;
-    }
-
-   
 }
