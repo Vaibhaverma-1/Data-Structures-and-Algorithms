@@ -1,15 +1,27 @@
-import java.util.HashSet;
-import java.util.Set;
-
 class Solution {
     public int findDuplicate(int[] nums) {
-        Set<Integer> seen = new HashSet<>();
-        for (int num : nums) {
-            if (seen.contains(num)) {
-                return num; // Duplicate found
-            }
-            seen.add(num);
+        int e= findMax(nums);
+        int hashset[] = new int[e+1];
+        for(int i=0; i<nums.length; i++){
+            hashset[nums[i]]++;
         }
-        return -1; // No duplicate found (should not happen as per problem constraints)
+
+        for(int i=0; i<nums.length; i++){
+            if(hashset[nums[i]]>=2){
+                return nums[i];
+            }
+        }
+         return -1;
     }
+    int findMax(int[] nums){
+        int max=Integer.MIN_VALUE;
+        for(int i=0; i<nums.length; i++){
+            if(nums[i]>=max){
+                max=nums[i];
+            }
+        }
+        return max;
+    }
+
+   
 }
