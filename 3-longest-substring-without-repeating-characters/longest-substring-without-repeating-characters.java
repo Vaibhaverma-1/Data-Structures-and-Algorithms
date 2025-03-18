@@ -1,23 +1,31 @@
 class Solution {
     public int lengthOfLongestSubstring(String s) {
-        int[] ch = new int[256]; // Extended to handle all ASCII characters
-        int count = 0;
-        int maxCount = 0;
-        int start = 0; // Tracks the start of the current substring
-
-        for (int i = 0; i < s.length(); i++) {
-            char currentChar = s.charAt(i);
-            // If the character is already in the current substring, reset the start
-            if (ch[currentChar] > start) {
-                start = ch[currentChar];
-            }
-            // Update the index of the current character
-            ch[currentChar] = i + 1;
-            // Calculate the length of the current substring
-            count = i - start + 1;
-            // Update maxCount if the current substring is longer
-            maxCount = Math.max(maxCount, count);
+        int n = s.length();
+        int[] lastIndex = new int[256];
+        
+        // Initialize all indices to -1
+        for (int i = 0; i < 256; i++) {
+            lastIndex[i] = -1;
         }
-        return maxCount;
+        
+        int l = 0;      // Left pointer of the window
+        int maxLen = 0; // Maximum length of substring found
+        
+        // Iterate over the string using r as the right pointer
+        for (int r = 0; r < n; r++) {
+            char c = s.charAt(r);
+            // If the character was seen before and is within the current window, move l
+            if (lastIndex[c] >= l) {
+                l = lastIndex[c] + 1;
+            }
+            
+            // Update the last seen index for this character
+            lastIndex[c] = r;
+            
+            // Calculate the length of the current window and update maxLen
+            maxLen = Math.max(maxLen, r - l + 1);
+        }
+        
+        return maxLen;
     }
 }
