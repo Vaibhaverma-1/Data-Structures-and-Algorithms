@@ -10,7 +10,7 @@ class Solution {
                 zeros++;
             }
 
-            while (zeros > k) {
+              if (zeros > k) {
                 if (nums[l] == 0) {
                     zeros--;
                 }
