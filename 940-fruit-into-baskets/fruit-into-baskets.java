@@ -26,7 +26,10 @@ class Solution {
                     l++;  // **Fixed: Increment left pointer**
                 }
             }
+            else{
             maxlen = Math.max(maxlen, r - l + 1);  // Always update max length
+            
+            }
             r++;
         }
         return maxlen;
