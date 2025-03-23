@@ -6,16 +6,16 @@ class Solution {
         int maxlen = 0;
         int l = 0, r = 0;
         int maxFreq = 0;
-        HashMap<Character, Integer> map = new HashMap<>();
+        int[] hashset = new int[26];
 
         while (r < n) {
-            char rightChar = s.charAt(r);
-            map.put(rightChar, map.getOrDefault(rightChar, 0) + 1);
-            maxFreq = Math.max(maxFreq, map.get(rightChar));
+            int right = s.charAt(r)-'A';
+            hashset[right]++;
+            maxFreq = Math.max(maxFreq, hashset[right]);
 
             if ((r - l + 1) - maxFreq > k) {
-                char leftChar = s.charAt(l);
-                map.put(leftChar, map.get(leftChar) - 1);
+                int left= s.charAt(l)-'A';
+                hashset[left]--;
                 l++;
             }
 
