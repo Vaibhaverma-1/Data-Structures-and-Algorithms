@@ -28,15 +28,20 @@ class Solution {
         // Step 3: Compare the first half and the reversed second half
         ListNode first = head;
         ListNode second = secondHalfStart;
+        boolean isPalindrome = true;
         while (second != null) {
             if (first.val != second.val) {
-                return false;
+                isPalindrome = false;
+                break;
             }
             first = first.next;
             second = second.next;
         }
 
-        return true;
+        // Step 4: Restore the original list (optional, good practice)
+        slow.next = reverse(secondHalfStart);
+
+        return isPalindrome;
     }
 
     // Helper function to reverse a linked list
@@ -45,12 +50,12 @@ class Solution {
         ListNode curr = head;
 
         while (curr != null) {
-            ListNode nextNode = curr.next; // store next node
-            curr.next = prev;              // reverse current node's pointer
-            prev = curr;                   // move prev and curr one step forward
+            ListNode nextNode = curr.next;
+            curr.next = prev;
+            prev = curr;
             curr = nextNode;
         }
 
-        return prev; // new head of the reversed list
+        return prev;
     }
 }
