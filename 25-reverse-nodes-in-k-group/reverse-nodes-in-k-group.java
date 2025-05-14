@@ -10,45 +10,55 @@
  */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-        ListNode prevGroupEnd = dummy;
+        ListNode temp = head;
+        ListNode prevLast = null;
 
-        while (true) {
-            ListNode temp = prevGroupEnd.next;
-            ListNode temp2 = prevGroupEnd.next;
-            int count = 0;
-
-            // Find k nodes
-            while (temp2 != null && count < k) {
-                temp2 = temp2.next;
-                count++;
+        while (temp != null) {
+            ListNode kThNode = getKthNode(temp, k);
+            if (kThNode == null) {
+                if (prevLast != null) {
+                    prevLast.next = temp;
+                }
+                break;
             }
 
-            if (count < k) break;
+            ListNode nextNode = kThNode.next;
+            kThNode.next = null;
 
-            // Reverse k nodes
-            ListNode newHead = reverse(temp, temp2);
-            prevGroupEnd.next = newHead;
-            temp.next = temp2;
-            prevGroupEnd = temp;
+            reverseLinkedList(temp);
+
+            if (temp == head) {
+                head = kThNode;
+            } else {
+                prevLast.next = kThNode;
+            }
+
+            prevLast = temp;
+            temp = nextNode;
         }
 
-        return dummy.next;
+        return head;
     }
 
-    ListNode reverse(ListNode head, ListNode tail) {
-        ListNode temp = head;
-        ListNode prev = null;
-        ListNode ptr = null;
-
-        while (temp != tail) {
-            ptr = temp.next;
-            temp.next = prev;
-            prev = temp;
-            temp = ptr;
+    // Finds the kth node starting from temp
+    static ListNode getKthNode(ListNode temp, int k) {
+        k -= 1;
+        while (temp != null && k > 0) {
+            temp = temp.next;
+            k--;
         }
+        return temp;
+    }
 
+    // Reverses a linked list segment and returns new head
+    static ListNode reverseLinkedList(ListNode head) {
+        ListNode prev = null;
+        while (head != null) {
+            ListNode front = head.next;
+            head.next = prev;
+            prev = head;
+            head = front;
+        }
         return prev;
     }
 }
