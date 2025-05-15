@@ -1,26 +1,22 @@
 class Solution {
     public ListNode rotateRight(ListNode head, int k) {
-        int len = length(head);
-        if (head == null || head.next == null || k == 0 || len == 0) {
-            return head;
-        }
+        if (head == null || head.next == null || k == 0) return head;
 
+        int len = getLength(head);
         k = k % len;
         if (k == 0) return head;
 
-        // Find the (len - k - 1)th node
-        int count = 1;
-        ListNode temp = head;
-        while (count < len - k) {
-            temp = temp.next;
-            count++;
+        // Find new tail: (len - k - 1)th node
+        ListNode current = head;
+        for (int i = 1; i < len - k; i++) {
+            current = current.next;
         }
 
-        // temp is now at the rotation breaking point
-        ListNode newHead = temp.next;
-        temp.next = null;  // Break the list here
+        // Detach and reassign head
+        ListNode newHead = current.next;
+        current.next = null;
 
-        // Go to the end of new list and connect it to original head
+        // Go to the end of the new list and attach original head
         ListNode tail = newHead;
         while (tail.next != null) {
             tail = tail.next;
@@ -30,7 +26,7 @@ class Solution {
         return newHead;
     }
 
-    int length(ListNode head) {
+    private int getLength(ListNode head) {
         int len = 0;
         while (head != null) {
             len++;
