@@ -8,47 +8,46 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-
- //Done by self, used gpt for syntax errors
 class Solution {
     public ListNode rotateRight(ListNode head, int k) {
-        int size = count(head);
-        ListNode finalNode = head; // Changed variable name from 'final' to 'finalNode' final is reserved
-        
-        if (head == null || head.next == null || k % size == 0) {return head; }
-        
- for (int i = 0; i < k % size; i++) {
-            finalNode = rotate(finalNode);
+        if (head == null || head.next == null || k == 0) {
+            return head;
         }
-        return finalNode;
+
+        k = k % length(head);
+        if (k == 0) {
+            return head;
+        }
+
+        while (k-- > 0) {
+            head = rotate(head);
+        }
+
+        return head;
     }
 
-    int count(ListNode head) {
-        int count = 0;
-        ListNode temp = head;
-        while (temp != null) { 
-            count++;
-            temp = temp.next;
-        }
-        return count;
-    }
-
+    // Helper method to rotate the list to the right by one place
     ListNode rotate(ListNode head) {
-        if(head == null || head.next == null) { return head;}
-
         ListNode temp = head;
         ListNode prev = null;
 
-       
         while (temp.next != null) {
             prev = temp;
             temp = temp.next;
         }
 
-       
-        prev.next = null;
         temp.next = head;
+        prev.next = null;
+        return temp; // new head
+    }
 
-        return temp; 
+    // Helper method to find the length of the list
+    int length(ListNode head) {
+        int len = 0;
+        while (head != null) {
+            len++;
+            head = head.next;
+        }
+        return len;
     }
 }
