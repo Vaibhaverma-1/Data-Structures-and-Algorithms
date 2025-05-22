@@ -1,28 +1,27 @@
 class Solution {
     public int[] nextGreaterElement(int[] nums1, int[] nums2) {
-        int[] ans = new int[nums1.length];
-
-        for (int i = 0; i < nums1.length; i++) {
-            int num = nums1[i];
-            int j = 0;
-
-            // Find the index of nums1[i] in nums2
-            while (j < nums2.length && nums2[j] != num) {
-                j++;
+        Stack<Integer> st = new Stack<>();
+        Map<Integer, Integer> ngeMap = new HashMap<>();
+        
+        // Build NGE map for nums2 using a monotonic stack
+        for (int i = nums2.length - 1; i >= 0; i--) {
+            int current = nums2[i];
+            
+            while (!st.isEmpty() && st.peek() <= current) {
+                st.pop();
             }
-
-            // Scan to the right for the next greater element
-            int nextGreater = -1;
-            for (int k = j + 1; k < nums2.length; k++) {
-                if (nums2[k] > num) {
-                    nextGreater = nums2[k];
-                    break;
-                }
-            }
-
-            ans[i] = nextGreater;
+            
+            int nextGreater = st.isEmpty() ? -1 : st.peek();
+            ngeMap.put(current, nextGreater);
+            st.push(current);
         }
-
+        
+        // Fill answer for nums1 from the map
+        int[] ans = new int[nums1.length];
+        for (int i = 0; i < nums1.length; i++) {
+            ans[i] = ngeMap.get(nums1[i]);
+        }
+        
         return ans;
     }
 }
