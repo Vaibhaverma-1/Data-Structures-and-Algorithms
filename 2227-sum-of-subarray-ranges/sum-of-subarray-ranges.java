@@ -1,58 +1,18 @@
 import java.util.*;
 
 public class Solution {
+    // Main method to calculate sum of all subarray ranges
     public long subArrayRanges(int[] nums) {
         int n = nums.length;
         long total = 0;
 
-        int[] nextGreater = new int[n];
-        int[] prevGreater = new int[n];
-        int[] nextSmaller = new int[n];
-        int[] prevSmaller = new int[n];
+        // Precompute next/previous greater and smaller elements
+        int[] nextGreater = nextGreaterElement(nums);
+        int[] prevGreater = prevGreaterElement(nums);
+        int[] nextSmaller = nextSmallerElement(nums);
+        int[] prevSmaller = prevSmallerElement(nums);
 
-        // Initialize
-        Arrays.fill(nextGreater, n);
-        Arrays.fill(prevGreater, -1);
-        Arrays.fill(nextSmaller, n);
-        Arrays.fill(prevSmaller, -1);
-
-        // Next Greater Element
-        Stack<Integer> stack = new Stack<>();
-        for (int i = 0; i < n; i++) {
-            while (!stack.isEmpty() && nums[stack.peek()] < nums[i]) {
-                nextGreater[stack.pop()] = i;
-            }
-            stack.push(i);
-        }
-
-        // Prev Greater Element
-        stack.clear();
-        for (int i = n - 1; i >= 0; i--) {
-            while (!stack.isEmpty() && nums[stack.peek()] <= nums[i]) {
-                prevGreater[stack.pop()] = i;
-            }
-            stack.push(i);
-        }
-
-        // Next Smaller Element
-        stack.clear();
-        for (int i = 0; i < n; i++) {
-            while (!stack.isEmpty() && nums[stack.peek()] > nums[i]) {
-                nextSmaller[stack.pop()] = i;
-            }
-            stack.push(i);
-        }
-
-        // Prev Smaller Element
-        stack.clear();
-        for (int i = n - 1; i >= 0; i--) {
-            while (!stack.isEmpty() && nums[stack.peek()] >= nums[i]) {
-                prevSmaller[stack.pop()] = i;
-            }
-            stack.push(i);
-        }
-
-        // Final Contribution Calculation
+        // Calculate contribution of each element as max and min in subarrays
         for (int i = 0; i < n; i++) {
             long maxCount = (long)(i - prevGreater[i]) * (nextGreater[i] - i);
             long minCount = (long)(i - prevSmaller[i]) * (nextSmaller[i] - i);
@@ -60,5 +20,69 @@ public class Solution {
         }
 
         return total;
+    }
+
+    // Find next greater element index for each element
+    private int[] nextGreaterElement(int[] arr) {
+        int n = arr.length;
+        int[] res = new int[n];
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = n - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && arr[stack.peek()] <= arr[i]) {
+                stack.pop();
+            }
+            res[i] = stack.isEmpty() ? n : stack.peek();
+            stack.push(i);
+        }
+        return res;
+    }
+
+    // Find previous greater element index for each element
+    private int[] prevGreaterElement(int[] arr) {
+        int n = arr.length;
+        int[] res = new int[n];
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i < n; i++) {
+            while (!stack.isEmpty() && arr[stack.peek()] < arr[i]) {
+                stack.pop();
+            }
+            res[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(i);
+        }
+        return res;
+    }
+
+    // Find next smaller element index for each element
+    private int[] nextSmallerElement(int[] arr) {
+        int n = arr.length;
+        int[] res = new int[n];
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = n - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && arr[stack.peek()] >= arr[i]) {
+                stack.pop();
+            }
+            res[i] = stack.isEmpty() ? n : stack.peek();
+            stack.push(i);
+        }
+        return res;
+    }
+
+    // Find previous smaller element index for each element
+    private int[] prevSmallerElement(int[] arr) {
+        int n = arr.length;
+        int[] res = new int[n];
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i < n; i++) {
+            while (!stack.isEmpty() && arr[stack.peek()] > arr[i]) {
+                stack.pop();
+            }
+            res[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(i);
+        }
+        return res;
     }
 }
