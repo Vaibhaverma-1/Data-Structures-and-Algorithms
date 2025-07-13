@@ -1,35 +1,31 @@
 class Solution {
     public String removeOuterParentheses(String s) {
-        int n = s.length();
-        Stack<Character> st = new Stack<>();
         StringBuilder result = new StringBuilder();
-        StringBuilder temp = new StringBuilder();
+        StringBuilder currentPrimitive = new StringBuilder();
+        Stack<Character> stack = new Stack<>();
 
-        for (int i = 0; i < n; i++) {
-            // If the stack is empty, it means a primitive is complete
-            // So we append the last primitive's inner part to result
-            if (st.isEmpty()) {
-                result.append(temp); // add the previous temp (inner part)
-                temp = new StringBuilder(); // reset temp for next primitive
+        for (char ch : s.toCharArray()) {
+            // If the stack is empty, we just finished a primitive
+            if (stack.isEmpty()) {
+                result.append(currentPrimitive); // append the previous primitive's inner content
+                currentPrimitive.setLength(0);   // reset for the next primitive
             }
 
-            if (s.charAt(i) == '(') {
-                st.push('(');
-                // Avoid appending the outermost '('
-                if (st.size() > 1) {
-                    temp.append('('); // only append if it's not the first '('
+            if (ch == '(') {
+                stack.push(ch);
+                if (stack.size() > 1) {
+                    currentPrimitive.append(ch); // not the outermost '('
                 }
-            } else {
-                st.pop();
-                // Avoid appending the outermost ')'
-                if (!st.isEmpty()) {
-                    temp.append(')');
+            } else { // ch == ')'
+                stack.pop();
+                if (!stack.isEmpty()) {
+                    currentPrimitive.append(ch); // not the outermost ')'
                 }
             }
         }
 
-        
-        result.append(temp);
+        // Append the last primitive's inner content (if any)
+        result.append(currentPrimitive);
         return result.toString();
     }
 }
