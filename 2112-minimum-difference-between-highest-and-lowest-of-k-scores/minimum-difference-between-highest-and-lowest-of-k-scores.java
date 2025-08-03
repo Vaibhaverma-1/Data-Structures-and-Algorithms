@@ -4,7 +4,7 @@ class Solution {
     public int minimumDifference(int[] nums, int k) {
         if (k <= 1) return 0;
 
-        Arrays.sort(nums);                  // sort first
+        Arrays.sort(nums);                  
         int n = nums.length;
         int l = 0, r = 0;
         int ans = Integer.MAX_VALUE;
