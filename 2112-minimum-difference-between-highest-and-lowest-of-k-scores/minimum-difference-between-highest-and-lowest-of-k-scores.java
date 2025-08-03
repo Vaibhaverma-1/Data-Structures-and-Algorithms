@@ -10,7 +10,7 @@ class Solution {
         int ans = Integer.MAX_VALUE;
 
         while (l + k <= n) {
-            // grow window to size k
+            
             while (r < n && r - l + 1 <= k) {
                 r++;
             }
