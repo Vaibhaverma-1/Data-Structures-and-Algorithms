@@ -2,31 +2,35 @@ class Solution {
     public int coinChange(int[] coins, int amount) {
         int n = coins.length;
         int[][] dp = new int[n + 1][amount + 1];
+        int INF = Integer.MAX_VALUE - 1;  // To avoid overflow on +1
 
-        // Fill DP with -1 (unvisited)
+        // Initialize
         for (int i = 0; i <= n; i++) {
-            for (int j = 0; j <= amount; j++) {
-                dp[i][j] = -1;
+            dp[i][0] = 0;  // 0 amount needs 0 coins
+        }
+        for (int j = 1; j <= amount; j++) {
+            dp[0][j] = INF;  // 0 coins can't make any positive amount
+        }
+
+        // Fill 1st row separately (only 1st coin allowed)
+        for (int j = 1; j <= amount; j++) {
+            if (j % coins[0] == 0)
+                dp[1][j] = j / coins[0];
+            else
+                dp[1][j] = INF;
+        }
+
+        // DP recurrence
+        for (int i = 2; i <= n; i++) {
+            for (int j = 1; j <= amount; j++) {
+                if (coins[i - 1] <= j) {
+                    dp[i][j] = Math.min(dp[i][j - coins[i - 1]] + 1, dp[i - 1][j]);
+                } else {
+                    dp[i][j] = dp[i - 1][j];
+                }
             }
         }
 
-        int ans = solve(coins, 0, amount, dp);
-        return ans == Integer.MAX_VALUE ? -1 : ans;
-    }
-
-    int solve(int[] coins, int i, int amount, int[][] dp) {
-        if (amount == 0) return 0;
-        if (amount < 0 || i >= coins.length) return Integer.MAX_VALUE;
-
-        if (dp[i][amount] != -1) return dp[i][amount];
-
-        // include current coin (stay at i)
-        int include = solve(coins, i, amount - coins[i], dp);
-        if (include != Integer.MAX_VALUE) include += 1;
-
-        // exclude current coin (move to i + 1)
-        int exclude = solve(coins, i + 1, amount, dp);
-
-        return dp[i][amount] = Math.min(include, exclude);
+        return dp[n][amount] >= INF ? -1 : dp[n][amount];
     }
 }
