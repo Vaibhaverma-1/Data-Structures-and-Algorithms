@@ -1,14 +1,21 @@
 class Solution {
     public int maxProfit(int[] prices) {
-        int buy = prices[0];
-        int profit=0;
-        for(int i=0; i<prices.length; i++){
-            if(prices[i]<buy){
-                buy=prices[i];
-            }
-            profit = Math.max(profit, prices[i]-buy);
+        return helper(0, prices[0], 0, prices);
+    }
+
+    private int helper(int idx, int buy, int profit, int[] prices) {
+        // Base case
+        if (idx == prices.length) return profit;
+
+        // Always update min price first
+        if (prices[idx] < buy) {
+            buy = prices[idx];
         }
 
-        return profit;
+        // Calculate profit if we sell today
+        profit = Math.max(profit, prices[idx] - buy);
+
+        // Move to next day with updated buy and profit
+        return helper(idx + 1, buy, profit, prices);
     }
 }
