@@ -1,14 +1,12 @@
 class Solution {
     public int maxProduct(int[] nums) {
-        int n = nums.length;
-        int maxProd = nums[0], minProd = nums[0], ans = nums[0];
-
-        for (int i = 1; i < n; i++) {
+        int maxHere = nums[0], minHere = nums[0], ans = nums[0];
+        for (int i = 1; i < nums.length; i++) {
             int x = nums[i];
-            int a = maxProd * x, b = minProd * x;
-            maxProd = Math.max(x, Math.max(a, b));
-            minProd = Math.min(x, Math.min(a, b));
-            ans = Math.max(ans, maxProd);
+            if (x < 0) { int t = maxHere; maxHere = minHere; minHere = t; } // flip roles
+            maxHere = Math.max(x, maxHere * x);
+            minHere = Math.min(x, minHere * x);
+            ans = Math.max(ans, maxHere);
         }
         return ans;
     }
