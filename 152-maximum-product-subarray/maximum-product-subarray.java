@@ -1,17 +1,14 @@
 class Solution {
     public int maxProduct(int[] nums) {
         int n = nums.length;
-        int maxProd=1, minProd=1;
-        int ans =Integer.MIN_VALUE;
-        for(int i=0; i<n; i++){
-            int a = maxProd * nums[i];
-            int b = minProd * nums[i];
-            maxProd = Math.max(a, Math.max(b,nums[i]));
-            minProd = Math.min(a, Math.min(b,nums[i]));
+        int maxProd = nums[0], minProd = nums[0], ans = nums[0];
+
+        for (int i = 1; i < n; i++) {
+            int x = nums[i];
+            int a = maxProd * x, b = minProd * x;
+            maxProd = Math.max(x, Math.max(a, b));
+            minProd = Math.min(x, Math.min(a, b));
             ans = Math.max(ans, maxProd);
-            System.out.println(" max: "+ maxProd);
-            System.out.println();
-            System.out.print("min: "+ minProd);
         }
         return ans;
     }
