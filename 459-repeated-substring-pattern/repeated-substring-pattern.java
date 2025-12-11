@@ -2,10 +2,10 @@ class Solution {
     public boolean repeatedSubstringPattern(String s) {
         int n = s.length();
 
-        // length of repeating substring
+        
         for (int len = 1; len <= n / 2; len++) {
 
-            // must divide total length
+          
             if (n % len != 0) continue;
 
             String part = s.substring(0, len);
