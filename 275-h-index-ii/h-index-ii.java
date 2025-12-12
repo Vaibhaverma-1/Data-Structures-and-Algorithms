@@ -1,16 +1,16 @@
 class Solution {
-    public int hIndex(int[] citations) {
-         int n = citations.length;
-        int left = 0, right = n - 1;
+    public int hIndex(int[] cit) {
+         int n = cit.length;
+        int l = 0, r = n-1;
         
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            if (citations[mid] >= n - mid) {
-                right = mid - 1;
+        while (l<=r) {
+            int mid = (l+r) / 2;
+            if (cit[mid] >= n - mid) {
+                r = mid - 1;
             } else {
-                left = mid + 1;
+                l = mid + 1;
             }
         }
-        return n - left;
+        return n - l;
     }
 }
