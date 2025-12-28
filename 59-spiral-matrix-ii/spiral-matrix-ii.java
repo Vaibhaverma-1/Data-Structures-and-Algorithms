@@ -10,28 +10,28 @@ class Solution {
         while (top <= bottom && left <= right) {
 
             for (int i = left; i <= right; i++) {
-                System.out.print("FO" + num + " ");
+                //System.out.print("FO" + num + " ");
                 ans[top][i] = num;
                 num++;
             }
             top++;
 
             for (int i = top; i <= bottom; i++) {
-                System.out.print("FO" + num + " ");
+                //System.out.print("FO" + num + " ");
                 ans[i][right] = num;
                 num++;
             }
             right--;
 
             for (int i = right; i >= left; i--) {
-                System.out.print("FO" + num + " ");
+                //System.out.print("FO" + num + " ");
                 ans[bottom][i] = num;
                 num++;
             }
             bottom--;
 
             for (int i = bottom; i >= top; i--) {
-                System.out.print("FO" + num + " ");
+                //System.out.print("FO" + num + " ");
                 ans[i][left] = num;
                 num++;
             }
