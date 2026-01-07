@@ -13,48 +13,21 @@
  *     }
  * }
  */
-import java.util.*;
-
-class Solution {
-    public TreeNode reverseOddLevels(TreeNode root) {
-        if (root == null) return root;
-
-        Queue<TreeNode> q = new LinkedList<>();
-        q.offer(root);
-
-        int level = 0;
-
-        while (!q.isEmpty()) {
-            int n = q.size();
-            List<TreeNode> currLevel = new ArrayList<>();
-
-            for (int i = 0; i < n; i++) {
-                TreeNode node = q.poll();
-                currLevel.add(node);
-
-                if (node.left != null) {
-                    q.offer(node.left);
-                }
-                if (node.right != null) {
-                    q.offer(node.right);
-                }
-            }
-
-          
-            if (level % 2 == 1) {
-                int i = 0, j = currLevel.size() - 1;
-                while (i < j) {
-                    int temp = currLevel.get(i).val;
-                    currLevel.get(i).val = currLevel.get(j).val;
-                    currLevel.get(j).val = temp;
-                    i++;
-                    j--;
-                }
-            }
-
-            level++;
-        }
-
+ class Solution{
+    public TreeNode reverseOddLevels(TreeNode root){
+        if(root==null) return root;
+        reverse(root.left,root.right,1);
         return root;
+    }
+
+    private void reverse(TreeNode l, TreeNode r, int level){
+        if(l==null || r==null) return;
+        if(level%2==1){
+            int t=l.val;
+            l.val=r.val;
+            r.val=t;
+        }
+        reverse(l.left,r.right,level+1);
+        reverse(l.right,r.left,level+1);
     }
 }
