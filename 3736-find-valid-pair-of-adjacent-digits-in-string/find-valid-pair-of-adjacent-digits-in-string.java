@@ -15,7 +15,7 @@ class Solution {
             if (map.get(s.charAt(i)) == s.charAt(i) - '0'
              && map.get(s.charAt(i + 1)) == s.charAt(i + 1) - '0' && s.charAt(i)!=s.charAt(i+1)) {
 
-                return "" + s.charAt(i) + s.charAt(i + 1);
+                return "" + s.charAt(i) + s.charAt(i+1);
             }
         }
         return "";
