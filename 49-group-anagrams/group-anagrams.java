@@ -1,34 +1,21 @@
-import java.util.*;
-
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
-        // Map to store grouped anagrams
-        HashMap<String, List<String>> map = new HashMap<>();
-
-        for (String s : strs) {
-            int[] count = new int[26]; // frequency array
-            for (int i = 0; i < s.length(); i++) {
-                count[s.charAt(i) - 'a']++;
+        int n = strs.length;
+        List<List<String>> list = new ArrayList<>();
+        HashMap<String,List<String>> map = new HashMap<>();
+        for(int i=0; i<n; i++){
+            int[] set = new int[26];
+            for(int j=0; j<strs[i].length(); j++){
+                set[strs[i].charAt(j)-'a']++;
             }
-
-            // Convert frequency array to a key string
-            String key = Arrays.toString(count);
-
-            // If key not in map, add a new list
-            if (!map.containsKey(key)) {
-                map.put(key, new ArrayList<>());
+            List<String> ans = new ArrayList<>();
+            if(map.containsKey(Arrays.toString(set))){
+                ans = map.get(Arrays.toString(set));
             }
-
-            // Add current string to the correct group
-            map.get(key).add(s);
+            ans.add(strs[i]);
+            map.put(Arrays.toString(set), ans);
         }
 
-        // Convert map values to a list of lists
-        List<List<String>> result = new ArrayList<>();
-        for (List<String> group : map.values()) {
-            result.add(group);
-        }
-
-        return result;
+            return new ArrayList<>(map.values());
     }
 }
