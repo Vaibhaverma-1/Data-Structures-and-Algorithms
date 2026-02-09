@@ -1,94 +1,74 @@
-class Node{
-    int key;
-    int val;
+class Node {
+    int key, val;
     Node next;
-    Node(int key, int val, Node next){
-       this.key =key;
-       this.val =val;
-       this.next = next;
+
+    Node(int key, int val) {
+        this.key = key;
+        this.val = val;
     }
-     Node(int key, int val){
-       this.key =key;
-       this.val =val;
-       this.next = null;
-    }
-    }
+}
+
 class MyHashMap {
     Node[] arr;
-    int n =10000;
+    int n = 10000;
+
     public MyHashMap() {
-        arr= new Node[n];
+        arr = new Node[n];
     }
-    
+
     public void put(int key, int value) {
-        int bucket = key%n;
-        Node temp =arr[bucket];
-        if(temp==null){
-            arr[bucket]= new Node(key,value);
+        int bucket = key % n;
+        Node temp = arr[bucket];
+
+        if (temp == null) {
+            arr[bucket] = new Node(key, value);
             return;
         }
-        if(temp.key==key){
-           temp.val=value;
-           return;
-        }
-        while(temp.next!= null){
-            if(temp.key==key){
-                temp.val=value;
+
+        while (temp != null) {
+            if (temp.key == key) {
+                temp.val = value;
                 return;
             }
-            temp =  temp.next;
+            if (temp.next == null) break;
+            temp = temp.next;
         }
-        if (temp.key == key) {
-    temp.val = value;
-    return;
-}
-temp.next = new Node(key, value);
 
-        
+        temp.next = new Node(key, value);
     }
-    
+
     public int get(int key) {
-        int bucket = key%n;
+        int bucket = key % n;
         Node temp = arr[bucket];
-        if(temp==null){
-            return -1;
-        }
-        if(temp.key==key){
-            return temp.val;
-        }
-        while(temp != null){
-            if(key==temp.key){
-                return temp.val;
-            }
+
+        while (temp != null) {
+            if (temp.key == key) return temp.val;
             temp = temp.next;
         }
         return -1;
-        
     }
-    
+
     public void remove(int key) {
-        int bucket = key%n;
-        Node  temp = arr[bucket];
-        if(temp==null){
+        int bucket = key % n;
+        Node temp = arr[bucket];
+
+        if (temp == null) return;
+
+        if (temp.key == key) {
+            arr[bucket] = temp.next;
             return;
         }
-        Node prev = temp;
-        if(temp.key == key){
-            temp= temp.next;
-            arr[bucket]=temp;
-            return;
-        }
-        while(temp != null){
-            if(temp.key == key){
-                prev.next = temp.next;
+
+        while (temp.next != null) {
+            if (temp.next.key == key) {
+                temp.next = temp.next.next;
                 return;
             }
-            prev=temp;
-            temp= temp.next;
-
+            temp = temp.next;
         }
     }
 }
+
 
 /**
  * Your MyHashMap object will be instantiated and called as such:
