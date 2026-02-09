@@ -1,21 +1,92 @@
+class Node{
+    int key;
+    int val;
+    Node next;
+    Node(int key, int val, Node next){
+       this.key =key;
+       this.val =val;
+       this.next = next;
+    }
+     Node(int key, int val){
+       this.key =key;
+       this.val =val;
+       this.next = null;
+    }
+    }
 class MyHashMap {
-    int n = 1000001;
-    int[] map;
+    Node[] arr;
+    int n =10000;
     public MyHashMap() {
-        map = new int[n];
-        Arrays.fill(map, -1);
+        arr= new Node[n];
     }
     
     public void put(int key, int value) {
-        map[key]=value;
+        int bucket = key%n;
+        Node temp =arr[bucket];
+        if(temp==null){
+            arr[bucket]= new Node(key,value);
+            return;
+        }
+        if(temp.key==key){
+           temp.val=value;
+           return;
+        }
+        while(temp.next!= null){
+            if(temp.key==key){
+                temp.val=value;
+                return;
+            }
+            temp =  temp.next;
+        }
+        if (temp.key == key) {
+    temp.val = value;
+    return;
+}
+temp.next = new Node(key, value);
+
+        
     }
     
     public int get(int key) {
-        return map[key];
+        int bucket = key%n;
+        Node temp = arr[bucket];
+        if(temp==null){
+            return -1;
+        }
+        if(temp.key==key){
+            return temp.val;
+        }
+        while(temp != null){
+            if(key==temp.key){
+                return temp.val;
+            }
+            temp = temp.next;
+        }
+        return -1;
+        
     }
     
     public void remove(int key) {
-        map[key]=-1;
+        int bucket = key%n;
+        Node  temp = arr[bucket];
+        if(temp==null){
+            return;
+        }
+        Node prev = temp;
+        if(temp.key == key){
+            temp= temp.next;
+            arr[bucket]=temp;
+            return;
+        }
+        while(temp != null){
+            if(temp.key == key){
+                prev.next = temp.next;
+                return;
+            }
+            prev=temp;
+            temp= temp.next;
+
+        }
     }
 }
 
