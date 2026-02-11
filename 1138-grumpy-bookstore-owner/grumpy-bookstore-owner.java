@@ -9,7 +9,7 @@ class Solution {
                 perma+=customers[i];
             }
         }
-        int ans = Integer.MIN_VALUE;
+        int ans = perma;
         for(int right=0; right<n; right++){
            
              if(grumpy[right]==1) sum+=customers[right];
