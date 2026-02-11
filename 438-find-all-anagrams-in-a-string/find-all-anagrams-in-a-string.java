@@ -8,7 +8,6 @@ class Solution {
         for(int i=0; i<m; i++){
             freq_p[p.charAt(i)-'a']++;
         }
-        String temp =Arrays.toString(freq_p);
         int left=0;
         for(int right=0; right<n; right++){
             count[s.charAt(right)-'a']++;
@@ -17,7 +16,7 @@ class Solution {
                 count[s.charAt(left)-'a']--;
                 left++;
             }
-            if(right-left+1==m && Arrays.toString(count).equals(temp)){
+            if(right-left+1==m && Arrays.equals(count,freq_p)){
                 list.add(left);
             }
         }
