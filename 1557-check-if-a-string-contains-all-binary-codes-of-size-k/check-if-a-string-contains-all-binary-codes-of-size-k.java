@@ -16,7 +16,8 @@ class Solution {
         }
 
         // System.out.println(set);
-        return set.size()==(int)Math.pow(2,k)?true:false;
+        // return set.size()==(int)Math.pow(2,k)?true:false;
+        return set.size() == (1 << k)?true:false;
     }
     // public void generateAll(HashSet<String> set, int k, int n){
        
