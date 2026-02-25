@@ -1,39 +1,22 @@
 class Solution {
     public int[] sortByBits(int[] arr) {
-        Arrays.sort(arr);
-        int n = arr.length;
-        int maxBits=0;
-        HashMap<Integer,List<Integer>> map = new HashMap<>();
-        int[] ans=new int[n];
-        for(int i=0;i<n; i++){
-            int temp = arr[i];
-            int count=0;
-            while(temp!=0){
-                temp = temp&(temp-1);
-                count++;
-            }
-            if(count>maxBits){
-                maxBits=count;
-            }
-            if(!map.containsKey(count)){
-                map.put(count, new ArrayList<>());
+        Integer[] temp = new Integer[arr.length];
 
-               
-            }
-            map.get(count).add(arr[i]);
+        for (int i = 0; i < arr.length; i++) {
+            temp[i] = arr[i];
+        }
 
+        Arrays.sort(temp, (a, b) -> {
+            int bitA = Integer.bitCount(a);
+            int bitB = Integer.bitCount(b);
+            if (bitA == bitB) return a - b;
+            return bitA - bitB;
+        });
+
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = temp[i];
         }
-        int ind=0;
-        for(int i=0; i<maxBits+1; i++){
-            if(map.containsKey(i)){
-                for(int val: map.get(i)){
-                    ans[ind]=val;
-                    ind++;
-                }
-            }
-        }
-       
-        return ans;
-        
+
+        return arr;
     }
 }
