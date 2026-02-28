@@ -2,20 +2,23 @@ class Solution {
     int MOD = 1_000_000_007;
 
     public int concatenatedBinary(int n) {
+        return helper(1, n, 0);
+    }
 
-        // 1️⃣ Build correct binary string
-        StringBuilder sb = new StringBuilder();
-        for (int i = 1; i <= n; i++) {
-            sb.append(Integer.toBinaryString(i));
+    private int helper(int curr, int n, long ans) {
+        if (curr > n) return (int) ans;
+
+        int temp = curr;
+
+        // collect bits of curr
+        int bits = 0;
+        while (temp > 0) {
+            bits++;
+            temp >>= 1;
         }
 
-        long ans = 0;
+        ans = ((ans << bits) % MOD + curr) % MOD;
 
-        // 2️⃣ Build number safely from left to right
-        for (int i = 0; i < sb.length(); i++) {
-            ans = (ans * 2 + (sb.charAt(i) - '0')) % MOD;
-        }
-
-        return (int) ans;
+        return helper(curr + 1, n, ans);
     }
 }
