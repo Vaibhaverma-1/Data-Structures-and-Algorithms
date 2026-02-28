@@ -2,19 +2,22 @@ class Solution {
     int MOD = 1_000_000_007;
 
     public int concatenatedBinary(int n) {
-        long ans = 0;
-        int bitLength = 0;
+        return helper(n);
+    }
 
-        for (int i = 1; i <= n; i++) {
+    private int helper(int n) {
+        if (n == 1) return 1;
 
-            // if i is power of 2, increase bit length
-            if ((i & (i - 1)) == 0) {
-                bitLength++;
-            }
+        long prev = helper(n - 1);
 
-            ans = ((ans << bitLength) + i) % MOD;
+        // manually count bits
+        int temp = n;
+        int bits = 0;
+        while (temp > 0) {
+            bits++;
+            temp >>= 1;
         }
 
-        return (int) ans;
+        return (int)(((prev << bits) % MOD + n) % MOD);
     }
 }
