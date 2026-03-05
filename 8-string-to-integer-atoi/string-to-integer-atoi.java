@@ -10,34 +10,24 @@ class Solution {
         int sign = 1;
 
         for (int i = 0; i < n; i++) {
-
             char ch = s.charAt(i);
-
-            // handle sign only if number not started
             if ((ch == '+' || ch == '-') && !number) {
                 sign = (ch == '-') ? -1 : 1;
-                number = true;   // prevent second sign
+                number = true;
                 continue;
             }
-
-            // stop if letter
             if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) {
                 break;
             }
-
-            // digit
             if (ch >= '0' && ch <= '9') {
                 number = true;
                 num = num * 10 + (ch - '0');
-
-                // overflow check
                 if (sign == 1 && num > Integer.MAX_VALUE)
                     return Integer.MAX_VALUE;
-
-                if (sign == -1 && -num < Integer.MIN_VALUE)
+                    if (sign == -1 && -num < Integer.MIN_VALUE)
                     return Integer.MIN_VALUE;
             } else {
-                break;  // stop on any other character
+                break;  
             }
         }
 
