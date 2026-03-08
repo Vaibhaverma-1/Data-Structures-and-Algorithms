@@ -12,24 +12,33 @@ class Solution {
             set.add(s);
         }
 
-        generate("", n, set);
+        StringBuilder sb = new StringBuilder();
+        generate(sb, n, set);
 
         return answer;
     }
 
-    void generate(String current, int n, HashSet<String> set) {
+    void generate(StringBuilder sb, int n, HashSet<String> set) {
 
-        if (found) return;  // stop recursion completely
+        if (found) return;
 
-        if (current.length() == n) {
-            if (!set.contains(current)) {
-                answer = current;
+        if (sb.length() == n) {
+            String candidate = sb.toString();
+            if (!set.contains(candidate)) {
+                answer = candidate;
                 found = true;
             }
             return;
         }
 
-        generate(current + "0", n, set);
-        generate(current + "1", n, set);
+        // choose '0'
+        sb.append('0');
+        generate(sb, n, set);
+        sb.deleteCharAt(sb.length() - 1);  // backtrack
+
+        // choose '1'
+        sb.append('1');
+        generate(sb, n, set);
+        sb.deleteCharAt(sb.length() - 1);  // backtrack
     }
 }
