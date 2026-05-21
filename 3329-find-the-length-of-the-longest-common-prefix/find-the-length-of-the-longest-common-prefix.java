@@ -13,7 +13,8 @@ class Solution {
         for(int i=0; i<m; i++){
             String s = String.valueOf(arr2[i]);
             for(int j=1; j<=s.length(); j++){
-                if(!set.contains(Integer.parseInt(s.substring(0,j)))){
+                int prefix = Integer.parseInt(s.substring(0,j));
+                if(!set.contains(prefix)){
                     break;
                 }
                 else{
