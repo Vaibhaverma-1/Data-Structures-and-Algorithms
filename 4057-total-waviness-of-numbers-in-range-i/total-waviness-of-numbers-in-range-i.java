@@ -1,15 +1,17 @@
 class Solution {
-    ArrayList<Integer> list;
+    
     public int totalWaviness(int num1, int num2) {
-        long sum=0;
-        for(int i=num1; i<=num2; i++){
-            sum+=(long)wave(i);
-        }
-        return (int) sum;
+    int sum = 0;
+
+    for (int i = num1; i <= num2; i++) {
+        sum += wave(i);
     }
 
+    return sum;
+}
+
     public int wave(int num){
-        list = new ArrayList<>();
+        ArrayList<Integer> list= new ArrayList<>();
         while(num>0){
             list.add(num % 10);
             num /= 10;
