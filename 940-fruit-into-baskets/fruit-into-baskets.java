@@ -1,36 +1,24 @@
-import java.util.HashMap;
-
 class Solution {
     public int totalFruit(int[] fruits) {
-        int n = fruits.length;
-        HashMap<Integer, Integer> map = new HashMap<>();
-        int maxlen = 0;
-        int l = 0, r = 0;
-
-        while (r < n) {
-            int freq = 0;
-            if (map.containsKey(fruits[r])) {
-                freq = map.get(fruits[r]);
+        int i=0,j=0,n=fruits.length, variety=0, maxlen = Integer.MIN_VALUE;
+        int[] freq = new int[n+1];
+        while(j<n){
+            if(freq[fruits[j]]==0){
+                variety++;
             }
-            freq++;
-            map.put(fruits[r], freq);
-
-            if (map.size() > 2) {
-                
-                int temp = map.get(fruits[l]);
-                temp--;
-                map.put(fruits[l], temp);
-                if (temp == 0) {
-                    map.remove(fruits[l]);
+            freq[fruits[j]]++;
+            while(variety>2){
+                freq[fruits[i]]--;
+                if(freq[fruits[i]]==0){
+                    variety--;
                 }
-                l++;  // **Fixed: Increment left pointer**
-                
+                i++;
             }
-            else{
-            maxlen = Math.max(maxlen, r - l + 1);  // Always update max length
-            
+            if(variety<=2){
+                maxlen = Math.max(maxlen,j-i+1);
             }
-            r++;
+            j++;
+
         }
         return maxlen;
     }
