@@ -1,25 +1,25 @@
-import java.util.HashSet;
-import java.util.Set;
-
 class Solution {
     public boolean isHappy(int n) {
-        Set<Integer> seen = new HashSet<>();
-        
-        while (n != 1 && !seen.contains(n)) {
-            seen.add(n);
-            n = getNext(n);
+        int slow = n, fast = n;
+
+        while (true) {
+            slow = sqSum(slow);
+            fast = sqSum(sqSum(fast));
+
+            if (slow == 1 || fast == 1) return true;
+            if (fast == slow) return false;
         }
-        
-        return n == 1;
     }
-    
-    private int getNext(int n) {
+
+    int sqSum(int n) {
         int sum = 0;
+
         while (n > 0) {
-            int d = n % 10;
-            sum += d * d;
-            n = n / 10;
+            int digit = n % 10;
+            sum += digit * digit;
+            n /= 10;
         }
+
         return sum;
     }
 }
