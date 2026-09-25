@@ -1,30 +1,35 @@
 class Solution {
     public boolean backspaceCompare(String s, String t) {
-        Stack<Character> st1=new Stack<>();
-        Stack<Character> st2=new Stack<>();
-        int n=s.length(),m=t.length();
-        int i=0,j=0;
-        while(i<n){
-            if(s.charAt(i)=='#' && !st1.isEmpty()){
-                st1.pop();
+        int n = s.length(),m=t.length();
+        int i=n-1,j=m-1,tskip=0,sskip=0;
+        while(i>=0 || j>=0){
+            while(j>=0){
+            if(t.charAt(j)=='#'){
+                tskip++;
+                j--;
+            } 
+            else if(tskip>0){ tskip--;
+            j--;
             }
-            else if(s.charAt(i)>='a' && s.charAt(i)<='z'){
-                st1.push(s.charAt(i));
+            else break;
             }
-            i++;
+            while(i>=0){
+            if(s.charAt(i)=='#'){
+                sskip++;
+                i--;
+            } 
+            else if(sskip>0){ sskip--;
+            i--;
+            }
+            else break;
+            }
+
+            if(i>=0 && j>=0 && s.charAt(i)!=t.charAt(j)) return false;
+            if((i>=0 && j<0)||(i<0 && j>=0)) return false;
+            i--;
+            j--;
         }
-        while(j<m){
-            if(t.charAt(j)=='#' && !st2.isEmpty()){
-                st2.pop();
-            }
-            else if(t.charAt(j)>='a' && t.charAt(j)<='z'){
-                st2.push(t.charAt(j));
-            }
-            j++;
-        }
-        while(!st1.isEmpty() && !st2.isEmpty()){
-            if(st1.pop()!=st2.pop()) return false;
-        }
-        return st1.isEmpty() && st2.isEmpty();
+        return true;
     }
+    
 }
