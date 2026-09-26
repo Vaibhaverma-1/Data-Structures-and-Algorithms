@@ -1,24 +1,34 @@
 class Solution {
     public boolean checkInclusion(String s1, String s2) {
-        int n = s1.length();
-        int m = s2.length();
-        int[] freq_s1 = new int[26];
+        int[] freq1= new int[26];
+        int[] freq2= new int[26];
+        int n = s1.length(), m = s2.length();
         for(int i=0; i<n; i++){
-            freq_s1[s1.charAt(i)-'a']++;
+            freq1[s1.charAt(i)-'a']++;
         }
-        int[] freq_s2 = new int[26];
-        int left=0;
-        for(int right =0; right<m; right++){
-            freq_s2[s2.charAt(right)-'a']++;
-
-            while(right-left+1>n){
-                freq_s2[s2.charAt(left)-'a']--;
-                left++;
+        int i=0,j=0;
+        while(j<m){
+            char ch = s2.charAt(j);
+            freq2[ch-'a']++;
+            int len = j-i+1;
+            boolean correct = true;
+            while(len>n){
+                char c = s2.charAt(i);
+                freq2[c-'a']--;
+                i++;
+                len--;
             }
-            if(right-left+1==n && Arrays.equals(freq_s1,freq_s2)){
-                return true;
+            if(len==n){
+                for(int k=0; k<26; k++)
+                {
+                    if(freq1[k]!=freq2[k]){
+                        correct = false;
+                        break;
+                    }
+                }
+                if(correct) return true;
             }
-
+            j++;
 
         }
         return false;
