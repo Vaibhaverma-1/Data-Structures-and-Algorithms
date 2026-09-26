@@ -10,52 +10,27 @@
  */
 class Solution {
     public boolean isPalindrome(ListNode head) {
-        if (head == null || head.next == null) {
-            return true; // A single node or empty list is always a palindrome
-        }
-
-        // Step 1: Use slow and fast pointers to find the middle
-        ListNode slow = head;
-        ListNode fast = head;
-        while (fast.next != null && fast.next.next != null) {
-            slow = slow.next;
+        if(head==null || head.next == null) return true;
+        ListNode fast=head,slow=head;
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
             fast = fast.next.next;
         }
-
-        // Step 2: Reverse the second half of the list
-        ListNode secondHalfStart = reverse(slow.next);
-
-        // Step 3: Compare the first half and the reversed second half
-        ListNode first = head;
-        ListNode second = secondHalfStart;
-        boolean isPalindrome = true;
-        while (second != null) {
-            if (first.val != second.val) {
-                isPalindrome = false;
-                break;
-            }
-            first = first.next;
-            second = second.next;
+        ListNode curr = slow, temp=null,prev=null;
+        while(curr!=null){
+            temp =curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=temp;
         }
-
-        // Step 4: Restore the original list (optional, good practice)
-        slow.next = reverse(secondHalfStart);
-
-        return isPalindrome;
-    }
-
-    // Helper function to reverse a linked list
-    ListNode reverse(ListNode head) {
-        ListNode prev = null;
-        ListNode curr = head;
-
-        while (curr != null) {
-            ListNode nextNode = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = nextNode;
+        fast=head;
+        while(prev!=null){
+           if(prev.val!=fast.val) return false;
+           prev=prev.next;
+           fast=fast.next;
         }
+        return true;
 
-        return prev;
+
     }
 }
