@@ -3,21 +3,22 @@ class Solution {
         int i=0,j=0,n=nums.length;
         int sum=0;
         int count=0;
+        int zeros=0;
         while(j<n){
            if(nums[j]==1) sum++;
            while(sum>goal && i<j)
            {
+            zeros=0;
             if(nums[i]==1) sum--;
             i++;
             }
 
            if(sum==goal){
-            int temp =i;
-            while(temp<j && nums[temp]!=1){
-                temp++;
-                count++;
+            while(i<j && nums[i]==0){
+                zeros++;
+                i++;
             }
-            count++;
+            count+=zeros+1;
            }
            j++;
         }
