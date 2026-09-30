@@ -9,12 +9,12 @@ class Solution {
             sum+=arr[i];
             if(sum%2==0 )
             { 
-                count=(((count+odd)%MOD)+MOD)%MOD;
+                count=(count+odd)%MOD;
                 even++;
             }
             else
             {
-                count=(((count+even)%MOD)+MOD)%MOD;
+                count=(count+even)%MOD;
                 odd++;
             }
 
