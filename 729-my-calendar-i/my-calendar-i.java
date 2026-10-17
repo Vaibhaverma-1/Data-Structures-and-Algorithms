@@ -7,7 +7,10 @@ class MyCalendar {
     
     public boolean book(int startTime, int endTime) {
         int n = events.size();
-        if(n==0) events.add(new int[]{startTime,endTime});
+        if(n==0){
+            events.add(new int[]{startTime,endTime});
+            return true;
+        }
         for(int i=0; i<n; i++){
             int[] curr = events.get(i);
             int s = curr[0];
