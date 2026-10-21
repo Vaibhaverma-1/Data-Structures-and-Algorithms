@@ -26,10 +26,5 @@ class Solution {
         if(start==min||end==max) return 1;
         if(start==max && end==min && minCount==1 && maxCount==1 ) return 3;
         return 2;
-        
-
-
-
-
     }
 }
