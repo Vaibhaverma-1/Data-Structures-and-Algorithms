@@ -2,7 +2,6 @@ class Solution {
     int maxLen=0;
     public int longestZigZag(TreeNode root) {
         dfs(root,0,1);
-        dfs(root,0,-1);
         return maxLen;
     }
     void dfs(TreeNode root,int len,int dir){
