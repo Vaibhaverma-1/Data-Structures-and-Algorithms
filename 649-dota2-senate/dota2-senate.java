@@ -18,7 +18,7 @@ class Solution {
             if(dir<rad){
                 dire.offer(dir+n);
             }
-            else if(rad<dir){
+            else{
                 radiant.offer(rad+n);
             }
         }
