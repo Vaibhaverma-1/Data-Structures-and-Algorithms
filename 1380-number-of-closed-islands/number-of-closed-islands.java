@@ -6,9 +6,8 @@ class Solution {
         int count=0;
         for(int i=1;i<n-1;i++){
             for(int j=1; j<m-1; j++){
-                if(grid[i][j]==0){
-                    isClosed =bfs(grid,i,j,n,m);
-                    if(isClosed) count++;
+                if(grid[i][j]==0 && bfs(grid,i,j,n,m)){
+                    count++;
                 }
             }
         }
