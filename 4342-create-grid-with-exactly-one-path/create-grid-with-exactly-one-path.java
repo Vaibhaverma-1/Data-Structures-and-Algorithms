@@ -1,22 +1,21 @@
 class Solution {
     public String[] createGrid(int m, int n) {
         String[] ans = new String[m];
-        for(int i=0; i<m; i++){
-            StringBuilder sb = new StringBuilder();
-            for(int j=0; j<n; j++){
-                if(i==0||j==n-1) sb.append('.');
-                else{
-                    sb.append('#');
-                }
-            
-            }
-            ans[i]=sb.toString();
 
+        char[] first = new char[n];
+        Arrays.fill(first, '.');
+
+        char[] rest = new char[n];
+        Arrays.fill(rest, '#');
+        rest[n - 1] = '.';
+
+        ans[0] = new String(first);
+        String row = new String(rest);
+
+        for (int i = 1; i < m; i++) {
+            ans[i] = row;
         }
-        return ans;
 
-        
+        return ans;
     }
-    //R and D only allowed
-    
 }
