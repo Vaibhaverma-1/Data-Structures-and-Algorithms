@@ -7,6 +7,6 @@ class Solution {
                 queue.poll();
             }
         }
-        return queue.poll();
+        return queue.peek();
     }
 }
